@@ -1,0 +1,41 @@
+{% extends "jogador/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<form action="" method="post" autocomplete="off">
+    {% csrf_token %}
+    {{form.nome|as_crispy_field}}
+
+    {{form.morada|as_crispy_field}}
+    <div class="row">
+        <div class="col-md-4">
+            {{form.telefone|as_crispy_field}}
+        </div>
+        <div class="col-md-8">
+            {{form.email|as_crispy_field}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            {{form.data_nasc|as_crispy_field}}
+        </div>
+        <div class="col-md-8">
+            {{form.nif|as_crispy_field}}
+        </div>
+    </div>
+    <div class="row button-row">
+        <div class="col-md-8">
+            <button type="submit" class="btn btn-success btn-block btn-lg"><i class="fas fa-database"></i>
+                Submit
+            </button>
+        </div>
+        <div class="col-md-4">
+            <a href="#" class="btn btn-secondary btn-block btn-lg">
+                <i class="fas fa-stream"></i> Back to list
+            </a>
+        </div>
+    </div>
+
+</form>
+
+{% endblock content %}
