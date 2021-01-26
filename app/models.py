@@ -154,7 +154,7 @@ class DjangoSession(models.Model):
 class Epoca(models.Model):
     n_campeonato = models.OneToOneField(Campeonato, models.DO_NOTHING, db_column='n_campeonato', primary_key=True)
     n_jogo = models.ForeignKey('Jogo', models.DO_NOTHING, db_column='n_jogo')
-    ano = models.IntegerField()
+    ano = models.CharField(max_length=20)
 
     class Meta:
         managed = False
@@ -214,8 +214,9 @@ class Jogo(models.Model):
 
 
 class Marcacao(models.Model):
-    n_jogo = models.IntegerField()
-    n_jogador = models.IntegerField()
+    n_marcacao = models.AutoField(primary_key=True)
+    n_jogo = models.ForeignKey(Jogo, models.DO_NOTHING, db_column='n_jogo')
+    n_jogador = models.ForeignKey(Jogador, models.DO_NOTHING, db_column='n_jogador')
     minuto = models.CharField(max_length=6)
     descricao = models.CharField(max_length=30, blank=True, null=True)
 
@@ -247,15 +248,15 @@ class Pontuacao(models.Model):
 
 class ResultadoJogo(models.Model):
     n_jogo = models.OneToOneField(Jogo, models.DO_NOTHING, db_column='n_jogo', primary_key=True)
-    n_equipa = models.ForeignKey(Equipa, models.DO_NOTHING, db_column='n_equipa')
+    equipa_a = models.ForeignKey(Equipa, models.DO_NOTHING, related_name='equipa_a', db_column='equipa_a')
+    equipa_b = models.ForeignKey(Equipa, models.DO_NOTHING, related_name='equipa_b', db_column='equipa_b')
     resultado = models.CharField(max_length=20)
     pontuacao = models.CharField(max_length=20)
-    visitante = models.CharField(max_length=5)
 
     class Meta:
         managed = False
         db_table = 'resultado_jogo'
-        unique_together = (('n_jogo', 'n_equipa'),)
+        unique_together = (('n_jogo', 'equipa_a', 'equipa_b'),)
 
 
 class Substituicao(models.Model):

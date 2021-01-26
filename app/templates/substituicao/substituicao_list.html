@@ -1,12 +1,12 @@
-{% extends "jogador/base.html" %}
+{% extends "substituicao/base.html" %}
 
 {% block content %}
 <table class="table table-bordeless">
     <thead class="border-bottom font-weight-bold">
     <tr>
-        <td> Nome </td>
-        <td> Equipa </td>
-        <td> Modalidade </td>
+        <td> Jogo </td>
+        <td> Jogador Entra </td>
+        <td> Jogador Sai </td>
         <td></td>
         <td>
             <a href="{% url 'jogador_novo' %}" class="btn btn-outline-dark">
@@ -17,11 +17,11 @@
     </tr>
     </thead>
     <tbody>
-    {% for jogador in jogador_list %}
+    {% for substituicao in substituicao_list %}
     <tr>
-        <td>{{jogador.nome}}</td>
-        <td>{{jogador.nome_equipa}}</td>
-        <td>{{jogador.nome_modalidade}}</td>
+        <td>{{substituicao.equipa_1}} : {{substituicao.equipa_2}}</td>
+        <td>{{substituicao.jogador_entra.nome}}</td>
+        <td>{{substituicao.jogador_sai.nome}}</td>
         <td>
             <a href="#" class="btn text-secondary px-0">
                 <i class="far fa-edit fa-lg"></i>

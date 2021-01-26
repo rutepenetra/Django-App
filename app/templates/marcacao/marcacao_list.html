@@ -1,15 +1,15 @@
-{% extends "jogador/base.html" %}
+{% extends "marcacao/base.html" %}
 
 {% block content %}
 <table class="table table-bordeless">
     <thead class="border-bottom font-weight-bold">
     <tr>
-        <td> Nome </td>
-        <td> Equipa </td>
-        <td> Modalidade </td>
+        <td> Jogo </td>
+        <td> Jogador </td>
+        <td> Minuto </td>
         <td></td>
         <td>
-            <a href="{% url 'jogador_novo' %}" class="btn btn-outline-dark">
+            <a href="#" class="btn btn-outline-dark">
                 <i class="fas fa-plus"></i> NOVO
             </a>
         </td>
@@ -17,11 +17,11 @@
     </tr>
     </thead>
     <tbody>
-    {% for jogador in jogador_list %}
+    {% for marcacao in marcacao_list %}
     <tr>
-        <td>{{jogador.nome}}</td>
-        <td>{{jogador.nome_equipa}}</td>
-        <td>{{jogador.nome_modalidade}}</td>
+        <td>{{marcacao.equipa_a}} : {{marcacao.equipa_b}}</td>
+        <td>{{marcacao.nome}}</td>
+        <td>{{marcacao.minuto}}</td>
         <td>
             <a href="#" class="btn text-secondary px-0">
                 <i class="far fa-edit fa-lg"></i>

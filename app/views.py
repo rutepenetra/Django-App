@@ -21,7 +21,17 @@ from .forms import JogadorForm
 
 #acao
 def acao_list(request):
-    context = {'acao_list':AcaoDisciplinar.objects.all()}
+    context = {'acao_list':AcaoDisciplinar.objects.raw('SELECT n_acao,  '
+                                                               'CASE WHEN equipa_a <> 0 '
+                                                                        'THEN (Select nome_equipa from equipa where n_equipa = equipa_a) '
+                                                               'END equipa_1,  '
+                                                        	  ' CASE WHEN equipa_b <> 0 '
+                                                                      'THEN (Select nome_equipa from equipa where n_equipa = equipa_b) '
+                                                        				'END equipa_2, nome, tipo_acao.descricao '
+                                                       ' FROM acao_disciplinar inner join jogador '
+                                                        'on acao_disciplinar.jogador = jogador.n_jogador inner join resultado_jogo '
+                                                        'on acao_disciplinar.jogo = resultado_jogo.n_jogo inner join tipo_acao '
+                                                        'on acao_disciplinar.tipo = tipo_acao.n_tipo_acao')}
     return render( request, "acao/acao_list.html", context)
 
 
@@ -83,7 +93,15 @@ def jogador_novo(request, id=0):
 
 #jogo
 def jogo_list(request):
-    context = {'jogo_list':Jogo.objects.all()}
+    context = {'jogo_list':Jogo.objects.raw('SELECT jogo.n_jogo, '
+                                               'CASE WHEN equipa_a <> 0 '
+                                               ' THEN (Select nome_equipa from equipa where n_equipa = equipa_a) '
+                                               'END equipa_a, '
+                                               'CASE WHEN equipa_b <> 0 '
+                                                ' THEN (Select nome_equipa from equipa where n_equipa = equipa_b) '
+                                                'END equipa_b, dia, hora, localizacao '
+                                            'FROM jogo inner join resultado_jogo  '
+                                            'on jogo.n_jogo = resultado_jogo.n_jogo')}
     return render( request, "jogo/jogo_list.html", context)
 
 
@@ -94,7 +112,16 @@ def jogo_novo(request):
 
 #marcacao
 def marcacao_list(request):
-    context = {'marcacao_list':Marcacao.objects.all()}
+    context = {'marcacao_list':Marcacao.objects.raw('SELECT n_marcacao, '
+                                                          ' CASE  WHEN equipa_a <> 0 '
+                                                                   ' THEN (Select nome_equipa from equipa where n_equipa = equipa_a) '
+                                                           'END equipa_a, '
+                                                    	 '  CASE	WHEN equipa_b <> 0 '
+                                                                  'THEN (Select nome_equipa from equipa where n_equipa = equipa_b) '
+                                                    				'END equipa_b, nome, minuto '
+                                                    'FROM marcacao inner join resultado_jogo  '
+                                                    	'on marcacao.n_jogo = resultado_jogo.n_jogo inner join jogador '
+                                                    	'on marcacao.n_jogador = jogador.n_jogador')}
     return render( request, "marcacao/marcacao_list.html", context)
 
 
@@ -116,7 +143,14 @@ def pontuacao_novo(request):
 
 #resultado
 def resultado_list(request):
-    context = {'resultado_list':ResultadoJogo.objects.all()}
+    context = {'resultado_list':ResultadoJogo.objects.raw('SELECT n_jogo, '
+                                                            ' CASE  WHEN equipa_a <> 0 '
+                                                                     ' THEN (Select nome_equipa from equipa where n_equipa = equipa_a) '
+                                                             'END equipa_1, '
+                                                         '  CASE	WHEN equipa_b <> 0 '
+                                                                    'THEN (Select nome_equipa from equipa where n_equipa = equipa_b) '
+                                                                    'END equipa_2, pontuacao_a, pontuacao_b '
+                                                      'FROM resultado_jogo ')}
     return render( request, "resultado/resultado_list.html", context)
 
 
@@ -127,7 +161,16 @@ def resultado_novo(request):
 
 #substituicao
 def substituicao_list(request):
-    context = {'substituicao_list':Substituicao.objects.all()}
+    context = {'substituicao_list':Substituicao.objects.raw('SELECT n_substituicao, jogo, '
+                                                            ' CASE  WHEN equipa_a <> 0 '
+                                                                     ' THEN (Select nome_equipa from equipa where n_equipa = equipa_a) '
+                                                             'END equipa_1, '
+                                                            '  CASE	WHEN equipa_b <> 0 '
+                                                                    'THEN (Select nome_equipa from equipa where n_equipa = equipa_b) '
+                                                                    'END equipa_2, pontuacao_a, pontuacao_b '
+                                                                'FROM substituicao INNER JOIN Resultado_jogo '
+                                                                'on substituicao.jogo = resultado_jogo.n_jogo inner join jogador '
+                                                                ' on substituicao.jogador_entra = jogador.n_jogador')}
     return render( request, "substituicao/substituicao_list.html", context)
 
 

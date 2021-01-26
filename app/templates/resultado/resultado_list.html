@@ -1,15 +1,14 @@
-{% extends "jogador/base.html" %}
+{% extends "resultado/base.html" %}
 
 {% block content %}
 <table class="table table-bordeless">
     <thead class="border-bottom font-weight-bold">
     <tr>
-        <td> Nome </td>
-        <td> Equipa </td>
-        <td> Modalidade </td>
+        <td> Jogo </td>
+        <td> Resultado </td>
         <td></td>
         <td>
-            <a href="{% url 'jogador_novo' %}" class="btn btn-outline-dark">
+            <a href="#" class="btn btn-outline-dark">
                 <i class="fas fa-plus"></i> NOVO
             </a>
         </td>
@@ -17,11 +16,11 @@
     </tr>
     </thead>
     <tbody>
-    {% for jogador in jogador_list %}
+    {% for resultado in resultado_list %}
     <tr>
-        <td>{{jogador.nome}}</td>
-        <td>{{jogador.nome_equipa}}</td>
-        <td>{{jogador.nome_modalidade}}</td>
+        <td>{{resultado.equipa_1}} : {{resultado.equipa_2}}</td>
+        <td>{{resultado.pontuacao_a}} : {{resultado.pontuacao_b}}</td>
+        <td></td>
         <td>
             <a href="#" class="btn text-secondary px-0">
                 <i class="far fa-edit fa-lg"></i>
