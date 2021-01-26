@@ -1,46 +1,55 @@
-{% extends "substituicao/base.html" %}
+{% extends "main/base.html" %}
 
 {% block content %}
-<table class="table table-bordeless">
-    <thead class="border-bottom font-weight-bold">
-    <tr>
-        <td> Jogo </td>
-        <td> Jogador Entra </td>
-        <td> Jogador Sai </td>
-        <td></td>
-        <td>
-            <a href="{% url 'jogador_novo' %}" class="btn btn-outline-dark">
-                <i class="fas fa-plus"></i> NOVO
-            </a>
-        </td>
+<div class="container">
+    <div class="col-md-10 offset-md-1 mt-5">
+        <div class="jumbotron">
+            <h1 class="display-4">Subsstituições</h1>
+            <p class="lead font-italic">Lista de todas as substituições</p>
+            <hr class="my-4">
+            <table class="table table-bordeless">
+                <thead class="border-bottom font-weight-bold">
+                <tr>
+                    <td> Jogo</td>
+                    <td> Jogador Entra</td>
+                    <td> Jogador Sai</td>
+                    <td></td>
+                    <td>
+                        <a href="{% url 'jogador_novo' %}" class="btn btn-outline-dark">
+                            <i class="fas fa-plus"></i> NOVO
+                        </a>
+                    </td>
 
-    </tr>
-    </thead>
-    <tbody>
-    {% for substituicao in substituicao_list %}
-    <tr>
-        <td>{{substituicao.equipa_1}} : {{substituicao.equipa_2}}</td>
-        <td>{{substituicao.jogador_entra.nome}}</td>
-        <td>{{substituicao.jogador_sai.nome}}</td>
-        <td>
-            <a href="#" class="btn text-secondary px-0">
-                <i class="far fa-edit fa-lg"></i>
-            </a>
-            <!--
-            <form action="#" method="post" class="d-inline">
-                {% csrf_token %}
-                <button type="submit" class="btn">
-                    <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
-                </button>
-            </form>-->
-        </td>
-        <td>
-            <a href="#" class="btn btn-outline-primary">
-                <i class="fas fa-plus"></i> INFO
-            </a>
-        </td>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
+                </tr>
+                </thead>
+                <tbody>
+                {% for substituicao in substituicao_list %}
+                <tr>
+                    <td>{{substituicao.equipa_1}} : {{substituicao.equipa_2}}</td>
+                    <td>{{substituicao.jogador_entra.nome}}</td>
+                    <td>{{substituicao.jogador_sai.nome}}</td>
+                    <td>
+                        <a href="#" class="btn text-secondary px-0">
+                            <i class="far fa-edit fa-lg"></i>
+                        </a>
+                        <!--
+                        <form action="#" method="post" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn">
+                                <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
+                            </button>
+                        </form>-->
+                    </td>
+                    <td>
+                        <a href="#" class="btn btn-outline-primary">
+                            <i class="fas fa-plus"></i> INFO
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 {% endblock content %}
