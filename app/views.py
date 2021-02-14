@@ -53,10 +53,14 @@ def acao_list(request):
     return render( request, "acao/acao_list.html", context)
 
 
-def acao_novo(request):
+def acao_novo(request, id = 0):
      if request.method == "GET":
-         form = AcaoForm()
-         return render(request, "acao/acao_novo.html", {'form': form})
+        if id==0:
+            form = AcaoForm()
+        else:
+            acao = AcaoDisciplinar.objects.get(pk=id)
+            form = AcaoForm(instance = acao)
+        return render(request, "acao/acao_novo.html", {'form': form})
      else:
          form = AcaoForm(request.POST)
          if form.is_valid():
@@ -72,10 +76,14 @@ def campeonato_list(request):
     return render( request, "campeonato/campeonato_list.html", context)
 
 
-def campeonato_novo(request):
+def campeonato_novo(request, id = 0):
     if request.method == "GET":
-         form = CampeonatoForm()
-         return render(request, "campeonato/campeonato_novo.html", {'form': form})
+        if id == 0:
+            form = CampeonatoForm()
+        else:
+            campeonato = CampeonatoForm.objects.get(pk=id)
+            form = CampeonatoForm(instance = campeonato)
+        return render(request, "campeonato/campeonato_novo.html", {'form': form})
     else:
         form = CampeonatoForm(request.POST)
         if form.is_valid():
@@ -84,12 +92,29 @@ def campeonato_novo(request):
 
 #convocatoria
 def convocatoria_list(request):
-    return
+	context = {'convocatoria_list':Convocatoria.objects.raw('SELECT convocatoria.n_jogo,  '
+                                                              'CASE WHEN equipa_a <> 0 '
+                                                                       'THEN (Select nome_equipa from equipa where n_equipa = equipa_a) '
+                                                              'END equipa_1,  '
+                                                          ' CASE WHEN equipa_b <> 0 '
+                                                                     'THEN (Select nome_equipa from equipa where n_equipa = equipa_b) '
+                                                                    'END equipa_2, nome_equipa, count(convocatoria.n_jogador) '
+                                                      ' FROM convocatoria inner join equipa '
+                                                       'on convocatoria.n_equipa = equipa.n_equipa inner join resultado_jogo '
+                                                       'on convocatoria.n_jogo = resultado_jogo.n_jogo '
+                                                       'group by convocatoria.n_equipa, convocatoria.n_jogo, resultado_jogo.equipa_a, resultado_jogo.equipa_b, equipa.nome_equipa '
+                                                       'order by convocatoria.n_jogo asc')}
+	return render( request, "convocatoria/convocatoria_list.html", context)
 
-def convocatoria_novo(request):
+
+def convocatoria_novo(request, id = 0):
      if request.method == "GET":
-         form = ConvocatoriaForm()
-         return render(request, "convocatoria/convocatoria_novo.html", {'form': form})
+        if id == 0:
+            form = ConvocatoriaForm()
+        else:
+            convocatoria = ConvocatoriaForm.objects.get(pk = id)
+            form = ConvocatoriaForm(instance = convocatoria)
+        return render(request, "convocatoria/convocatoria_novo.html", {'form': form})
      else:
          form = ConvocatoriaForm(request.POST)
          if form.is_valid():
@@ -98,12 +123,23 @@ def convocatoria_novo(request):
 
 #epoca
 def epoca_list(request):
-    return
+	context = {'epoca_list':Epoca.objects.raw('SELECT epoca.n_campeonato,  '
+                                                      'ano, nome_campeonato, count(ano)  '
+                                                      ' FROM epoca inner join campeonato '
+                                                       'on epoca.n_campeonato = campeonato.n_campeonato '
+                                                       'group by epoca.n_campeonato, nome_campeonato, ano '
+                                                       'order by epoca.ano asc')}
+	return render( request, "epoca/epoca_list.html", context)
 
-def epoca_novo(request):
+
+def epoca_novo(request, id = 0):
      if request.method == "GET":
-         form = EpocaForm()
-         return render(request, "epoca/epoca_novo.html", {'form': form})
+        if id == 0:
+            form = EpocaForm()
+        else:
+            epoca = EpocaForm.objects.get(pk = id)
+            form = EpocaForm(instance = epoca)
+        return render(request, "epoca/epoca_novo.html", {'form': form})
      else:
          form = EpocaForm(request.POST)
          if form.is_valid():
@@ -116,10 +152,14 @@ def equipa_list(request):
     return render( request, "equipa/equipa_list.html", context)
 
 
-def equipa_novo(request):
+def equipa_novo(request, id = 0):
     if request.method == "GET":
-         form = EquipaForm()
-         return render(request, "equipa/equipa_novo.html", {'form': form})
+        if id == 0:
+            form = EquipaForm()
+        else:
+            equipa = EquipaForm.objects.get(pk = id)
+            form = EquipaForm(instance = equipa)
+        return render(request, "equipa/equipa_novo.html", {'form': form})
     else:
          form = EquipaForm(request.POST)
          if form.is_valid():
@@ -128,12 +168,22 @@ def equipa_novo(request):
 
 #faixa_etaria
 def faixa_etaria_list(request):
-    return
+	context = {'faixa_etaria_list':FaixaEtaria.objects.raw('SELECT n_faixa,  '
+                                                      'designacao, count(*)  '
+                                                      ' FROM faixa_etaria inner join equipa '
+                                                       'on faixa_etaria.n_faixa = equipa.faixa_etaria '
+                                                       'group by faixa_etaria.n_faixa, designacao '
+                                                       )}
+	return render( request, "faixa_etaria/faixa_etaria_list.html", context)
 
-def faixa_etaria_novo(request):
+def faixa_etaria_novo(request, id = 0):
      if request.method == "GET":
-         form = FaixaEtariaForm()
-         return render(request, "faixa_etaria/faixa_etaria_novo.html", {'form': form})
+        if id == 0:
+            form = FaixaEtariaForm()
+        else:
+            faixa_etaria = FaixaEtariaForm.objects.get(pk = id)
+            form = FaixaEtariaForm(instance = faixa_etaria)
+        return render(request, "faixa_etaria/faixa_etaria_novo.html", {'form': form})
      else:
          form = FaixaEtariaForm(request.POST)
          if form.is_valid():
@@ -151,15 +201,19 @@ def jogador_list(request):
 
     return render( request, "jogador/jogador_list.html", context)
 
-def jogador_novo(request):
-        if request.method == "GET":
-            form = JogadorForm()
-            return render(request, "jogador/jogador_novo.html", {'form': form})
-        else:
-            form = JogadorForm(request.POST)
-            if form.is_valid():
-                form.save()
-            return redirect('/jogador/')
+def jogador_novo(request, id = 0):
+	if request.method == "GET":
+		if id == 0:
+			form = JogadorForm()
+		else:
+			jogador = JogadorForm.objects.get(pk = id)
+			form = JogadorForm(instance = jogador)
+		return render(request, "jogador/jogador_novo.html", {'form': form})
+	else:
+	    form = JogadorForm(request.POST)
+	    if form.is_valid():
+	        form.save()
+	    return redirect('/jogador/')
 
 #jogo
 def jogo_list(request):
@@ -175,10 +229,14 @@ def jogo_list(request):
     return render( request, "jogo/jogo_list.html", context)
 
 
-def jogo_novo(request):
+def jogo_novo(request, id = 0):
     if request.method == "GET":
-         form = JogoForm()
-         return render(request, "jogo/jogo_novo.html", {'form': form})
+        if id == 0:
+            form = JogoForm()
+        else:
+            jogo = JogoForm.objects.get(pk = id)
+            form = JogoForm(instance = jogo)
+        return render(request, "jogo/jogo_novo.html", {'form': form})
     else:
          form = JogoForm(request.POST)
          if form.is_valid():
@@ -202,10 +260,14 @@ def marcacao_list(request):
     return render( request, "marcacao/marcacao_list.html", context)
 
 
-def marcacao_novo(request):
+def marcacao_novo(request, id = 0):
     if request.method == "GET":
-         form = MarcacaoForm()
-         return render(request, "marcacao/marcacao_novo.html", {'form': form})
+        if id == 0:
+            form = MarcacaoForm()
+        else:
+            marcacao = MarcacaoForm.objects.get(pk = id)
+            form = MarcacaoForm(instance = marcacao)
+        return render(request, "marcacao/marcacao_novo.html", {'form': form})
     else:
          form = MarcacaoForm(request.POST)
          if form.is_valid():
@@ -214,12 +276,22 @@ def marcacao_novo(request):
 
 #modalidade
 def modalidade_list(request):
-    return
+	context = {'modalidade_list':Modalidade.objects.raw('SELECT n_modalidade,  '
+                                                      'nome_modalidade, count(*)  '
+                                                      ' FROM modalidade inner join equipa '
+                                                       'on modalidade.n_modalidade = equipa.modalidade '
+                                                       'group by n_modalidade, nome_modalidade '
+                                                       )}
+	return render( request, "modalidade/modalidade_list.html", context)
 
-def modalidade_novo(request):
+def modalidade_novo(request, id = 0):
      if request.method == "GET":
-         form = ModalidadeForm()
-         return render(request, "modalidade/modalidade_novo.html", {'form': form})
+        if id == 0:
+            form = ModalidadeForm()
+        else:
+            modalidade = ModalidadeForm.objects.get(pk = id)
+            form = ModalidadeForm(instance = modalidade)
+        return render(request, "modalidade/modalidade_novo.html", {'form': form})
      else:
          form = ModalidadeForm(request.POST)
          if form.is_valid():
@@ -232,10 +304,14 @@ def pontuacao_list(request):
     return render( request, "pontuacao/pontuacao_list.html", context)
 
 
-def pontuacao_novo(request):
+def pontuacao_novo(request, id = 0):
     if request.method == "GET":
-         form = PontuacaoForm()
-         return render(request, "pontuacao/pontuacao_novo.html", {'form': form})
+        if id == 0:
+            form = PontuacaoForm()
+        else:
+            pontuacao = PontuacaoForm.objects.get(pk = id)
+            form = PontuacaoForm(instance = pontuacao)
+        return render(request, "pontuacao/pontuacao_novo.html", {'form': form})
     else:
          form = Pontuacao(request.POST)
          if form.is_valid():
@@ -255,10 +331,14 @@ def resultado_list(request):
     return render( request, "resultado/resultado_list.html", context)
 
 
-def resultado_novo(request):
+def resultado_novo(request, id = 0):
     if request.method == "GET":
-         form = ResultadoForm()
-         return render(request, "resultado/resultado_novo.html", {'form': form})
+        if id == 0:
+            form = ResultadoForm()
+        else:
+            resultado = ResultadoForm.objects.get(pk = id)
+            form = ResultadoForm(instance = resultado)
+        return render(request, "resultado/resultado_novo.html", {'form': form})
     else:
          form = ResultadoForm(request.POST)
          if form.is_valid():
@@ -281,10 +361,14 @@ def substituicao_list(request):
     return render( request, "substituicao/substituicao_list.html", context)
 
 
-def substituicao_novo(request):
+def substituicao_novo(request, id = 0):
     if request.method == "GET":
-         form = SubstituicaoForm()
-         return render(request, "substituicao/substituicao_novo.html", {'form': form})
+        if id == 0:
+            form = SubstituicaoForm()
+        else:
+            substituicao = SubstituicaoForm.objects.get(pk = id)
+            form = SubstituicaoForm(instance = substituicao)
+        return render(request, "substituicao/substituicao_novo.html", {'form': form})
     else:
          form = SubstituicaoForm(request.POST)
          if form.is_valid():
@@ -293,12 +377,20 @@ def substituicao_novo(request):
 
 #tipo_acao
 def tipo_acao_list(request):
-    return
+    context = {'tipo_acao_list':TipoAcao.objects.raw('SELECT n_tipo_acao, descricao, nome_modalidade '
+                                                    'FROM tipo_acao INNER JOIN modalidade '
+                                                    'on tipo_acao.modalidade = modalidade.n_modalidade ')}
+    return render( request, "tipo_acao/tipo_acao_list.html", context)
 
-def tipo_acao_novo(request):
+
+def tipo_acao_novo(request, id = 0):
      if request.method == "GET":
-         form = TipoAcaoForm()
-         return render(request, "tipo_acao/tipo_acao_novo.html", {'form': form})
+        if id == 0:
+            form = TipoAcaoForm()
+        else:
+            tipo_acao = TipoAcaoForm.objects.get(pk = id)
+            form = TipoAcaoForm(instance = tipo_acao)
+        return render(request, "tipo_acao/tipo_acao_novo.html", {'form': form})
      else:
          form = TipoAcaoForm(request.POST)
          if form.is_valid():
@@ -307,12 +399,21 @@ def tipo_acao_novo(request):
 
  #tipo_pontucao
 def tipo_pontuacao_list(request):
-    return
+    context = {'tipo_pontuacao_list':TipoPontuacao.objects.raw('SELECT n_tipo_pontuacao, vitoria, derrota, empate, nome_modalidade '
+                                                                'FROM tipo_pontuacao INNER JOIN modalidade '
+                                                                'on tipo_pontuacao.n_tipo_pontuacao = modalidade.tipo_pontuacao '
+                                                                )}
+    return render( request, "tipo_pontuacao/tipo_pontuacao_list.html", context)
 
-def tipo_pontuacao_novo(request):
+
+def tipo_pontuacao_novo(request, id = 0):
     if request.method == "GET":
-      form = AcaoForm()
-      return render(request, "tipo_pontuacao/tipo_pontucao_novo.html", {'form': form})
+        if id == 0:
+            form = AcaoForm()
+        else:
+            tipo_pontuacao = TipoPontuacaoForm.objects.get(pk = id)
+            form = TipoPontuacaoForm(instance = tipo_pontuacao)
+        return render(request, "tipo_pontuacao/tipo_pontucao_novo.html", {'form': form})
     else:
       form = AcaoForm(request.POST)
       if form.is_valid():

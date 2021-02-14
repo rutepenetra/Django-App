@@ -29,7 +29,7 @@
                     <td>{{acao.jogador.nome}}</td>
                     <td>{{acao.tipo.descricao}}</td>
                     <td>
-                        <a href="#" class="btn text-secondary px-0">
+                        <a href="{% url 'acao_update' acao.n_acao %}" class="btn text-secondary px-0">
                             <i class="far fa-edit fa-lg"></i>
                         </a>
                         <!--

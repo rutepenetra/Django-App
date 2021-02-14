@@ -1,10 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "main/base.html" %}
 
-</body>
-</html>
+{% block content %}
+<div class="container">
+    <div class="col-md-10 offset-md-1 mt-5">
+        <div class="jumbotron">
+            <h1 class="display-4"> Tipo de Pontuação </h1>
+            <p class="lead font-italic"> * </p>
+            <hr class="my-4">
+            <table class="table table-bordeless">
+                <thead class="border-bottom font-weight-bold">
+                <tr>
+                    <td> Modalidade </td>
+                    <td> Pontos Por Vitória </td>
+                    <td> Pontos Por Empate </td>
+                    <td> Pontos Por Derrota </td>
+                    <td></td>
+                    <td>
+                        <a href="#" class="btn btn-outline-dark">
+                            <i class="fas fa-plus"></i> NOVO
+                        </a>
+                    </td>
+                
+                </tr>
+                </thead>
+                <tbody>
+                {% for tipo_pontuacao in tipo_pontuacao_list %}
+                <tr>
+                    <td>{{tipo_pontuacao.nome_modalidade}}</td>
+                    <td>{{tipo_pontuacao.vitoria}}</td>
+                    <td>{{tipo_pontuacao.empate}}</td>
+                    <td>{{tipo_pontuacao.derrota}}</td>
+                    <td>
+                        <a href="#" class="btn text-secondary px-0">
+                            <i class="far fa-edit fa-lg"></i>
+                        </a>
+                        <!--
+                        <form action="#" method="post" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn">
+                                <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
+                            </button>
+                        </form>-->
+                    </td>
+                    <td>
+                        <a href="#" class="btn btn-outline-primary">
+                            <i class="fas fa-plus"></i> INFO
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

@@ -221,6 +221,7 @@ class Jogo(models.Model):
     hora = models.TimeField()
     localizacao = models.CharField(max_length=50)
 
+
     class Meta:
         managed = False
         db_table = 'jogo'
