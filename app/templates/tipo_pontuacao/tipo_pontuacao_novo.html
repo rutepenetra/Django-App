@@ -5,28 +5,26 @@
 <div class="container">
     <div class="col-md-10 offset-md-1 mt-5">
         <div class="jumbotron">
-            <h1 class="display-4">Jogadores</h1>
+            <h1 class="display-4"> Tipo Pontuação </h1>
             <p class="lead font-italic"> * </p>
             <hr class="my-4">
             <form action="" method="post" autocomplete="off">
                 {% csrf_token %}
-                {{form.nome|as_crispy_field}}
 
-                {{form.morada|as_crispy_field}}
                 <div class="row">
                     <div class="col-md-4">
-                        {{form.telefone|as_crispy_field}}
+                        {{form.vitoria|as_crispy_field}}
                     </div>
                     <div class="col-md-8">
-                        {{form.email|as_crispy_field}}
+                        {{form.derrota|as_crispy_field}}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        {{form.data_nasc|as_crispy_field}}
+                        {{form.empate|as_crispy_field}}
                     </div>
                     <div class="col-md-8">
-                        {{form.nif|as_crispy_field}}
+                        {{form.descricao_tipo_pontuacao|as_crispy_field}}
                     </div>
                 </div>
                 <div class="row button-row">

@@ -15,6 +15,8 @@ class AcaoDisciplinar(models.Model):
     jogador = models.ForeignKey('Jogador', models.DO_NOTHING, db_column='jogador')
     jogo = models.ForeignKey('Jogo', models.DO_NOTHING, db_column='jogo')
 
+    def __str__(self):
+            return self.descricao
     class Meta:
         managed = False
         db_table = 'acao_disciplinar'
@@ -90,6 +92,8 @@ class Campeonato(models.Model):
     n_campeonato = models.AutoField(primary_key=True)
     nome_campeonato = models.CharField(max_length=100)
 
+    def __str__(self):
+            return self.nome_campeonato
     class Meta:
         managed = False
         db_table = 'campeonato'
@@ -100,6 +104,7 @@ class Convocatoria(models.Model):
     n_equipa = models.ForeignKey('Equipa', models.DO_NOTHING, db_column='n_equipa')
     n_jogador = models.ForeignKey('Jogador', models.DO_NOTHING, db_column='n_jogador')
     posicao = models.CharField(max_length=50)
+    suplente = models.CharField(max_length=3)
 
     class Meta:
         managed = False
@@ -156,6 +161,8 @@ class Epoca(models.Model):
     n_jogo = models.ForeignKey('Jogo', models.DO_NOTHING, db_column='n_jogo')
     ano = models.CharField(max_length=20)
 
+    def __str__(self):
+            return self.ano
     class Meta:
         managed = False
         db_table = 'epoca'
@@ -174,6 +181,8 @@ class Equipa(models.Model):
     modalidade = models.ForeignKey('Modalidade', models.DO_NOTHING, db_column='modalidade', blank=True, null=True)
     faixa_etaria = models.ForeignKey('FaixaEtaria', models.DO_NOTHING, db_column='faixa_etaria', blank=True, null=True)
 
+    def __str__(self):
+            return self.nome_equipa
     class Meta:
         managed = False
         db_table = 'equipa'
@@ -183,6 +192,8 @@ class FaixaEtaria(models.Model):
     n_faixa = models.AutoField(primary_key=True)
     designacao = models.CharField(max_length=25)
 
+    def __str__(self):
+            return self.designacao
     class Meta:
         managed = False
         db_table = 'faixa_etaria'
@@ -197,6 +208,8 @@ class Jogador(models.Model):
     email = models.CharField(max_length=50)
     morada = models.CharField(max_length=100)
 
+    def __str__(self):
+            return self.nome
     class Meta:
         managed = False
         db_table = 'jogador'
@@ -230,6 +243,9 @@ class Modalidade(models.Model):
     nome_modalidade = models.CharField(max_length=50)
     tipo_pontuacao = models.ForeignKey('TipoPontuacao', models.DO_NOTHING, db_column='tipo_pontuacao')
 
+    def __str__(self):
+            return self.nome_modalidade
+
     class Meta:
         managed = False
         db_table = 'modalidade'
@@ -250,8 +266,8 @@ class ResultadoJogo(models.Model):
     n_jogo = models.OneToOneField(Jogo, models.DO_NOTHING, db_column='n_jogo', primary_key=True)
     equipa_a = models.ForeignKey(Equipa, models.DO_NOTHING, related_name='equipa_a', db_column='equipa_a')
     equipa_b = models.ForeignKey(Equipa, models.DO_NOTHING, related_name='equipa_b', db_column='equipa_b')
-    resultado = models.CharField(max_length=20)
-    pontuacao = models.CharField(max_length=20)
+    pontuacao_a = models.IntegerField()
+    pontuacao_b = models.IntegerField()
 
     class Meta:
         managed = False
@@ -275,6 +291,9 @@ class TipoAcao(models.Model):
     descricao = models.CharField(max_length=100)
     modalidade = models.ForeignKey(Modalidade, models.DO_NOTHING, db_column='modalidade')
 
+    def __str__(self):
+            return self.descricao
+
     class Meta:
         managed = False
         db_table = 'tipo_acao'
@@ -287,6 +306,8 @@ class TipoPontuacao(models.Model):
     derrota = models.IntegerField()
     empate = models.IntegerField()
 
+    def __str__(self):
+            return self.descricao_tipo_pontuacao
     class Meta:
         managed = False
         db_table = 'tipo_pontuacao'

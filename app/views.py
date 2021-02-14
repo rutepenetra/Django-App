@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import AcaoDisciplinar
 from .models import Campeonato
 from .models import Convocatoria
@@ -17,7 +17,25 @@ from .models import TipoPontuacao
 
 
 from .forms import JogadorForm
+from .forms import EquipaForm
+from .forms import JogoForm
+from .forms import MarcacaoForm
+from .forms import EpocaForm
+from .forms import ConvocatoriaForm
+from .forms import ResultadoForm
+from .forms import PontuacaoForm
+from .forms import AcaoForm
+from .forms import TipoAcaoForm
+from .forms import SubstituicaoForm
+from .forms import CampeonatoForm
+from .forms import ModalidadeForm
+from .forms import TipoPontuacaoForm
+from .forms import FaixaEtariaForm
 
+
+#main
+def main_view(request):
+    return render( request, "main/base2.html")
 
 #acao
 def acao_list(request):
@@ -36,8 +54,14 @@ def acao_list(request):
 
 
 def acao_novo(request):
-    return
-
+     if request.method == "GET":
+         form = AcaoForm()
+         return render(request, "acao/acao_novo.html", {'form': form})
+     else:
+         form = AcaoForm(request.POST)
+         if form.is_valid():
+             form.save()
+         return redirect('/acao/')
 
 #campeonato
 def campeonato_list(request):
@@ -49,8 +73,42 @@ def campeonato_list(request):
 
 
 def campeonato_novo(request):
+    if request.method == "GET":
+         form = CampeonatoForm()
+         return render(request, "campeonato/campeonato_novo.html", {'form': form})
+    else:
+        form = CampeonatoForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect('/campeonato/')
+
+#convocatoria
+def convocatoria_list(request):
     return
 
+def convocatoria_novo(request):
+     if request.method == "GET":
+         form = ConvocatoriaForm()
+         return render(request, "convocatoria/convocatoria_novo.html", {'form': form})
+     else:
+         form = ConvocatoriaForm(request.POST)
+         if form.is_valid():
+             form.save()
+         return redirect('/convocatoria/')
+
+#epoca
+def epoca_list(request):
+    return
+
+def epoca_novo(request):
+     if request.method == "GET":
+         form = EpocaForm()
+         return render(request, "epoca/epoca_novo.html", {'form': form})
+     else:
+         form = EpocaForm(request.POST)
+         if form.is_valid():
+             form.save()
+         return redirect('/epoca/')
 
 #equipa
 def equipa_list(request):
@@ -59,8 +117,28 @@ def equipa_list(request):
 
 
 def equipa_novo(request):
+    if request.method == "GET":
+         form = EquipaForm()
+         return render(request, "equipa/equipa_novo.html", {'form': form})
+    else:
+         form = EquipaForm(request.POST)
+         if form.is_valid():
+             form.save()
+         return redirect('/equipa/')
+
+#faixa_etaria
+def faixa_etaria_list(request):
     return
 
+def faixa_etaria_novo(request):
+     if request.method == "GET":
+         form = FaixaEtariaForm()
+         return render(request, "faixa_etaria/faixa_etaria_novo.html", {'form': form})
+     else:
+         form = FaixaEtariaForm(request.POST)
+         if form.is_valid():
+             form.save()
+         return redirect('/faixa_etaria/')
 
 #jogador
 def jogador_list(request):
@@ -73,20 +151,12 @@ def jogador_list(request):
 
     return render( request, "jogador/jogador_list.html", context)
 
-def jogador_novo(request, id=0):
+def jogador_novo(request):
         if request.method == "GET":
-            if id == 0:
-                form = JogadorForm()
-            else:
-                jogador = Jogador.objects.get(pk=id)
-                form = JogadorForm(instance=jogador)
+            form = JogadorForm()
             return render(request, "jogador/jogador_novo.html", {'form': form})
         else:
-            if id == 0:
-                form = JogadorForm(request.POST)
-            else:
-                jogador = Jogador.objects.get(pk=id)
-                form = JogadorForm(request.POST,instance= jogador)
+            form = JogadorForm(request.POST)
             if form.is_valid():
                 form.save()
             return redirect('/jogador/')
@@ -106,7 +176,14 @@ def jogo_list(request):
 
 
 def jogo_novo(request):
-    return
+    if request.method == "GET":
+         form = JogoForm()
+         return render(request, "jogo/jogo_novo.html", {'form': form})
+    else:
+         form = JogoForm(request.POST)
+         if form.is_valid():
+             form.save()
+         return redirect('/jogo/')
 
 
 
@@ -126,9 +203,28 @@ def marcacao_list(request):
 
 
 def marcacao_novo(request):
+    if request.method == "GET":
+         form = MarcacaoForm()
+         return render(request, "marcacao/marcacao_novo.html", {'form': form})
+    else:
+         form = MarcacaoForm(request.POST)
+         if form.is_valid():
+             form.save()
+         return redirect('/marcacao/')
+
+#modalidade
+def modalidade_list(request):
     return
 
-
+def modalidade_novo(request):
+     if request.method == "GET":
+         form = ModalidadeForm()
+         return render(request, "modalidade/modalidade_novo.html", {'form': form})
+     else:
+         form = ModalidadeForm(request.POST)
+         if form.is_valid():
+             form.save()
+         return redirect('/modalidade/')
 
 #pontuacao
 def pontuacao_list(request):
@@ -137,9 +233,14 @@ def pontuacao_list(request):
 
 
 def pontuacao_novo(request):
-    return
-
-
+    if request.method == "GET":
+         form = PontuacaoForm()
+         return render(request, "pontuacao/pontuacao_novo.html", {'form': form})
+    else:
+         form = Pontuacao(request.POST)
+         if form.is_valid():
+             form.save()
+         return redirect('/pontuacao/')
 
 #resultado
 def resultado_list(request):
@@ -155,8 +256,14 @@ def resultado_list(request):
 
 
 def resultado_novo(request):
-    return
-
+    if request.method == "GET":
+         form = ResultadoForm()
+         return render(request, "resultado/resultado_novo.html", {'form': form})
+    else:
+         form = ResultadoForm(request.POST)
+         if form.is_valid():
+             form.save()
+         return redirect('/resultado/')
 
 
 #substituicao
@@ -175,6 +282,40 @@ def substituicao_list(request):
 
 
 def substituicao_novo(request):
+    if request.method == "GET":
+         form = SubstituicaoForm()
+         return render(request, "substituicao/substituicao_novo.html", {'form': form})
+    else:
+         form = SubstituicaoForm(request.POST)
+         if form.is_valid():
+             form.save()
+         return redirect('/substituicao/')
+
+#tipo_acao
+def tipo_acao_list(request):
     return
 
+def tipo_acao_novo(request):
+     if request.method == "GET":
+         form = TipoAcaoForm()
+         return render(request, "tipo_acao/tipo_acao_novo.html", {'form': form})
+     else:
+         form = TipoAcaoForm(request.POST)
+         if form.is_valid():
+             form.save()
+         return redirect('/tipo_acao/')
+
+ #tipo_pontucao
+def tipo_pontuacao_list(request):
+    return
+
+def tipo_pontuacao_novo(request):
+    if request.method == "GET":
+      form = AcaoForm()
+      return render(request, "tipo_pontuacao/tipo_pontucao_novo.html", {'form': form})
+    else:
+      form = AcaoForm(request.POST)
+      if form.is_valid():
+          form.save()
+      return redirect('/tipo_pontuacao/')
 

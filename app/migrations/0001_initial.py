@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='AcaoDisciplinar',
             fields=[
-                ('n_acao', models.AutoField(primary_key=True, serialize=False)),
+                ('n_acao', models.AutoField(auto_created=True, primary_key=True, serialize=True)),
                 ('descricao', models.CharField(blank=True, max_length=100, null=True)),
             ],
             options={
@@ -99,7 +99,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Campeonato',
             fields=[
-                ('n_campeonato', models.AutoField(primary_key=True, serialize=False)),
+                ('n_campeonato', models.AutoField(auto_created=True, primary_key=True, serialize=True)),
                 ('nome_campeonato', models.CharField(max_length=100)),
             ],
             options={
@@ -162,7 +162,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Equipa',
             fields=[
-                ('n_equipa', models.AutoField(primary_key=True, serialize=False)),
+                ('n_equipa', models.AutoField(auto_created=True, primary_key=True, serialize=True)),
                 ('nome_equipa', models.CharField(max_length=50)),
                 ('fundacao', models.IntegerField()),
                 ('origem', models.CharField(max_length=50)),
@@ -179,7 +179,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='FaixaEtaria',
             fields=[
-                ('n_faixa', models.AutoField(primary_key=True, serialize=False)),
+                ('n_faixa', models.AutoField(auto_created=True, primary_key=True, serialize=True)),
                 ('designacao', models.CharField(max_length=25)),
             ],
             options={
@@ -190,7 +190,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Jogador',
             fields=[
-                ('n_jogador', models.AutoField(primary_key=True, serialize=False)),
+                ('n_jogador', models.AutoField(auto_created=True, primary_key=True, serialize=True)),
                 ('nome', models.CharField(max_length=50)),
                 ('data_nasc', models.DateField()),
                 ('nif', models.IntegerField()),
@@ -206,7 +206,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Jogo',
             fields=[
-                ('n_jogo', models.AutoField(primary_key=True, serialize=False)),
+                ('n_jogo', models.AutoField(auto_created=True, primary_key=True, serialize=True)),
                 ('dia', models.DateField()),
                 ('hora', models.TimeField()),
                 ('localizacao', models.CharField(max_length=50)),
@@ -219,7 +219,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Marcacao',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=True, verbose_name='ID')),
                 ('n_jogo', models.IntegerField()),
                 ('n_jogador', models.IntegerField()),
                 ('minuto', models.CharField(max_length=6)),
@@ -233,7 +233,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Modalidade',
             fields=[
-                ('n_modalidade', models.AutoField(primary_key=True, serialize=False)),
+                ('n_modalidade', models.AutoField(auto_created=True, primary_key=True, serialize=True)),
                 ('nome_modalidade', models.CharField(max_length=50)),
             ],
             options={
@@ -244,7 +244,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Substituicao',
             fields=[
-                ('n_substituicao', models.AutoField(primary_key=True, serialize=False)),
+                ('n_substituicao', models.AutoField(auto_created=True, primary_key=True, serialize=True)),
             ],
             options={
                 'db_table': 'substituicao',
@@ -254,7 +254,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='TipoAcao',
             fields=[
-                ('n_tipo_acao', models.AutoField(primary_key=True, serialize=False)),
+                ('n_tipo_acao', models.AutoField(auto_created=True, primary_key=True, serialize=True)),
                 ('descricao', models.CharField(max_length=100)),
             ],
             options={
@@ -265,7 +265,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='TipoPontuacao',
             fields=[
-                ('n_tipo_pontuacao', models.AutoField(primary_key=True, serialize=False)),
+                ('n_tipo_pontuacao', models.AutoField(auto_created=True, primary_key=True, serialize=True)),
                 ('descricao_tipo_pontuacao', models.CharField(max_length=100)),
                 ('vitoria', models.IntegerField()),
                 ('derrota', models.IntegerField()),
