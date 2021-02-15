@@ -10,7 +10,9 @@
             <table class="table table-bordeless">
                 <thead class="border-bottom font-weight-bold">
                 <tr>
-                    <td> Nome</td>
+                    <td> Nome Equipa</td>
+                    <td> Ano de Fundação </td>
+                    <td> Origem </td>
                     <td> Treinador</td>
                     <td> Modalidade</td>
                     <td></td>
@@ -26,10 +28,12 @@
                 {% for equipa in equipa_list %}
                 <tr>
                     <td>{{equipa.nome_equipa}}</td>
+                    <td>{{equipa.fundacao}}</td>
+                    <td>{{equipa.origem}}</td>
                     <td>{{equipa.treinador}}</td>
                     <td>{{equipa.modalidade.nome_modalidade}}</td>
                     <td>
-                        <a href="#" class="btn text-secondary px-0">
+                        <a href="{% url 'equipa_update' equipa.n_equipa %}" class="btn text-secondary px-0">
                             <i class="far fa-edit fa-lg"></i>
                         </a>
                         <!--

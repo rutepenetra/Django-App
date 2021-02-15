@@ -10,9 +10,9 @@
             <table class="table table-bordeless">
                 <thead class="border-bottom font-weight-bold">
                 <tr>
-                    <td> Nome</td>
-                    <td> Equipa</td>
-                    <td> Modalidade</td>
+                    <td> Nome </td>
+                    <td> Data Nascimento </td>
+                    <td> Morada </td>
                     <td></td>
                     <td>
                         <a href="{% url 'jogador_novo' %}" class="btn btn-outline-dark">
@@ -26,10 +26,10 @@
                 {% for jogador in jogador_list %}
                 <tr>
                     <td>{{jogador.nome}}</td>
-                    <td>{{jogador.nome_equipa}}</td>
-                    <td>{{jogador.nome_modalidade}}</td>
+                    <td>{{jogador.data_nasc}}</td>
+                    <td>{{jogador.telefone}}</td>
                     <td>
-                        <a href="#" class="btn text-secondary px-0">
+                        <a href="{% url 'jogador_update' jogador.n_jogador %}" class="btn text-secondary px-0">
                             <i class="far fa-edit fa-lg"></i>
                         </a>
                         <!--

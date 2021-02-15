@@ -10,10 +10,10 @@
             <table class="table table-bordeless">
                 <thead class="border-bottom font-weight-bold">
                 <tr>
-                    <td> Equipa</td>
-                    <td> Dia</td>
-                    <td> Hora</td>
-                    <td> Local</td>
+                    <td> Jogo </td>
+                    <td> Dia </td>
+                    <td> Hora </td>
+                    <td> Local </td>
                     <td></td>
                     <td>
                         <a href="#" class="btn btn-outline-dark">
@@ -26,12 +26,12 @@
                 <tbody>
                 {% for jogo in jogo_list %}
                 <tr>
-                    <td>{{jogo.equipa_a}} : {{jogo.equipa_b}}</td>
+                    <td>{{jogo}} </td>
                     <td>{{jogo.dia}}</td>
                     <td>{{jogo.hora}}</td>
                     <td>{{jogo.localizacao}}</td>
                     <td>
-                        <a href="#" class="btn text-secondary px-0">
+                        <a href="{% url 'jogo_update' jogo.n_jogo %}" class="btn text-secondary px-0">
                             <i class="far fa-edit fa-lg"></i>
                         </a>
                         <!--

@@ -26,12 +26,12 @@
                 <tbody>
                 {% for tipo_pontuacao in tipo_pontuacao_list %}
                 <tr>
-                    <td>{{tipo_pontuacao.nome_modalidade}}</td>
+                    <td>{{tipo_pontuacao}}</td>
                     <td>{{tipo_pontuacao.vitoria}}</td>
                     <td>{{tipo_pontuacao.empate}}</td>
                     <td>{{tipo_pontuacao.derrota}}</td>
                     <td>
-                        <a href="#" class="btn text-secondary px-0">
+                        <a href="{% url 'tipo_pontuacao_update' tipo_pontuacao.n_tipo_pontuacao %}" class="btn text-secondary px-0">
                             <i class="far fa-edit fa-lg"></i>
                         </a>
                         <!--

@@ -221,6 +221,8 @@ class Jogo(models.Model):
     hora = models.TimeField()
     localizacao = models.CharField(max_length=50)
 
+    def __str__(self):
+                return str(ResultadoJogo.objects.get(pk=self).equipa_b) + ' : ' + str(ResultadoJogo.objects.get(pk=self).equipa_b)
 
     class Meta:
         managed = False
@@ -270,6 +272,7 @@ class ResultadoJogo(models.Model):
     pontuacao_a = models.IntegerField()
     pontuacao_b = models.IntegerField()
 
+
     class Meta:
         managed = False
         db_table = 'resultado_jogo'
@@ -308,7 +311,7 @@ class TipoPontuacao(models.Model):
     empate = models.IntegerField()
 
     def __str__(self):
-            return self.descricao_tipo_pontuacao
+            return str(Modalidade.objects.get(tipo_pontuacao=self).nome_modalidade)
     class Meta:
         managed = False
         db_table = 'tipo_pontuacao'

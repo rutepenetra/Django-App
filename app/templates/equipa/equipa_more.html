@@ -1,0 +1,55 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<div class="container">
+	<div class="col-md-10 offset-md-1 mt-5">
+		<div class="jumbotron">
+			<h1 class="display-4">Equipa</h1>
+			<p class="lead font-italic">*</p>
+			<hr class="my-4">
+			
+			<div>
+				<h2>
+					Nome:
+				</h2>
+				<p>{{equipa.nome_equipa}}</p>
+				<h2>
+					Ano de Fundação:
+				</h2>
+				<p>{{equipa.fundacao}}</p>
+				<h2>
+					Origem:
+				</h2>
+				<p>{{equipa.origem}}</p>
+				<h2>
+					Telefone:
+				</h2>
+				<p>{{equipa.telefone}}</p>
+				<h2>
+					Email:
+				</h2>
+				<p>{{equipa.email}}</p>
+				<h2>
+					Descrição:
+				</h2>
+				<p>{{equipa.descricao_quipa}}</p>
+				<h2>
+					Treinador:
+				</h2>
+				<p>{{equipa.treinador}}</p>
+				<h2>
+					Modalidade:
+				</h2>
+				<p>{{equipa.modalidade}}</p>
+				<h2>
+					Faixa Etária:
+				</h2>
+				<p>{{equipa.faixa_etaria}}</p>
+				
+			</div>
+		
+		</div>
+	</div>
+</div>
+
+{% endblock content %}

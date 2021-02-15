@@ -11,8 +11,7 @@
                 <thead class="border-bottom font-weight-bold">
                 <tr>
                     <td> Nome</td>
-                    <td> Ano</td>
-                    <td> Nº de Jogos Realizados</td>
+                    
                     <td></td>
                     <td>
                         <a href="#" class="btn btn-outline-dark">
@@ -26,10 +25,9 @@
                 {% for campeonato in campeonato_list %}
                 <tr>
                     <td>{{campeonato.nome_campeonato}}</td>
-                    <td>{{campeonato.ano}}</td>
-                    <td>{{campeonato.count}}</td>
+                    
                     <td>
-                        <a href="#" class="btn text-secondary px-0">
+                        <a href="{% url 'campeonato_update' campeonato.n_campeonato %}" class="btn text-secondary px-0">
                             <i class="far fa-edit fa-lg"></i>
                         </a>
                         <!--

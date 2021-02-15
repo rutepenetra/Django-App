@@ -25,11 +25,11 @@
                 <tbody>
                 {% for substituicao in substituicao_list %}
                 <tr>
-                    <td>{{substituicao.equipa_1}} : {{substituicao.equipa_2}}</td>
+                    <td>{{substituicao.jogo}}</td>
                     <td>{{substituicao.jogador_entra.nome}}</td>
                     <td>{{substituicao.jogador_sai.nome}}</td>
                     <td>
-                        <a href="#" class="btn text-secondary px-0">
+                        <a href="{% url 'substituicao_update' substituicao.n_substituicao %}" class="btn text-secondary px-0">
                             <i class="far fa-edit fa-lg"></i>
                         </a>
                         <!--

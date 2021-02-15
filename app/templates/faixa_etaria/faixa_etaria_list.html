@@ -11,7 +11,7 @@
                 <thead class="border-bottom font-weight-bold">
                 <tr>
                     <td> Faixa Etária </td>
-                    <td> Nº de Equipas </td>
+            
                     
                     
                     <td></td>
@@ -27,9 +27,9 @@
                 {% for faixa_etaria in faixa_etaria_list %}
                 <tr>
                     <td>{{faixa_etaria.designacao}} </td>
-                    <td>{{faixa_etaria.count}}</td>
+                   
                     <td>
-                        <a href="#" class="btn text-secondary px-0">
+                        <a href="{% url 'faixa_etaria_update' faixa_etaria.n_faixa %}" class="btn text-secondary px-0">
                             <i class="far fa-edit fa-lg"></i>
                         </a>
                         <!--

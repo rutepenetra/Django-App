@@ -39,17 +39,7 @@ def main_view(request):
 
 #acao
 def acao_list(request):
-    context = {'acao_list':AcaoDisciplinar.objects.raw('SELECT n_acao,  '
-                                                               'CASE WHEN equipa_a <> 0 '
-                                                                        'THEN (Select nome_equipa from equipa where n_equipa = equipa_a) '
-                                                               'END equipa_1,  '
-                                                        	  ' CASE WHEN equipa_b <> 0 '
-                                                                      'THEN (Select nome_equipa from equipa where n_equipa = equipa_b) '
-                                                        				'END equipa_2, nome, tipo_acao.descricao '
-                                                       ' FROM acao_disciplinar inner join jogador '
-                                                        'on acao_disciplinar.jogador = jogador.n_jogador inner join resultado_jogo '
-                                                        'on acao_disciplinar.jogo = resultado_jogo.n_jogo inner join tipo_acao '
-                                                        'on acao_disciplinar.tipo = tipo_acao.n_tipo_acao')}
+    context = {'acao_list':AcaoDisciplinar.objects.all()}
     return render( request, "acao/acao_list.html", context)
 
 
@@ -62,17 +52,25 @@ def acao_novo(request, id = 0):
             form = AcaoForm(instance = acao)
         return render(request, "acao/acao_novo.html", {'form': form})
      else:
-         form = AcaoForm(request.POST)
-         if form.is_valid():
-             form.save()
-         return redirect('/acao/')
+        if id == 0:
+            form = AcaoForm(request.POST)
+        else:
+            acao = AcaoDisciplinar.objects.get(pk = id)
+            form = AcaoForm(request.POST, instance = acao)
+        if form.is_valid():
+            form.save()
+        return redirect('/acao/')
+
+def acao_more(request, n_acao):
+	try:
+		acao = AcaoDisciplinar.objects.get(pk = n_acao)
+	except AcaoDisciplinar.DoesNotExist:
+		raise Http404('Acao Disciplinar não existe')
+	return render(request, 'acao/acao_more.html', context={'acao':acao})
 
 #campeonato
 def campeonato_list(request):
-    context = {'campeonato_list':Campeonato.objects.raw('SELECT CAMPEONATO.N_CAMPEONATO, CAMPEONATO.NOME_CAMPEONATO, EPOCA.ANO, COUNT(EPOCA.N_JOGO) '
-                                                           'FROM CAMPEONATO INNER JOIN EPOCA '
-                                                            'ON CAMPEONATO.N_CAMPEONATO = EPOCA.N_CAMPEONATO '
-                                                           'GROUP BY CAMPEONATO.N_CAMPEONATO, CAMPEONATO.NOME_CAMPEONATO, EPOCA.ANO ')}
+    context = {'campeonato_list':Campeonato.objects.all()}
     return render( request, "campeonato/campeonato_list.html", context)
 
 
@@ -81,14 +79,26 @@ def campeonato_novo(request, id = 0):
         if id == 0:
             form = CampeonatoForm()
         else:
-            campeonato = CampeonatoForm.objects.get(pk=id)
+            campeonato = Campeonato.objects.get(pk=id)
             form = CampeonatoForm(instance = campeonato)
         return render(request, "campeonato/campeonato_novo.html", {'form': form})
     else:
-        form = CampeonatoForm(request.POST)
+        if id == 0:
+            form = CampeonatoForm(request.POST)
+        else:
+            campeonato = Campeonato.objects.get (pk = id)
+            form = CampeonatoForm(request.POST, instance = campeonato)
         if form.is_valid():
             form.save()
         return redirect('/campeonato/')
+
+def campeonato_more(request, n_campeonato):
+	try:
+		campeonato = Campeonato.objects.get(pk = n_campeonato)
+	except Campeonato.DoesNotExist:
+		raise Http404('Campeonato não existe')
+	return render(request, 'campeonato/campeonato_more.html', context={'campeonato':campeonato})
+
 
 #convocatoria
 def convocatoria_list(request):
@@ -112,14 +122,18 @@ def convocatoria_novo(request, id = 0):
         if id == 0:
             form = ConvocatoriaForm()
         else:
-            convocatoria = ConvocatoriaForm.objects.get(pk = id)
+            convocatoria = Convocatoria.objects.get(pk = id)
             form = ConvocatoriaForm(instance = convocatoria)
         return render(request, "convocatoria/convocatoria_novo.html", {'form': form})
      else:
-         form = ConvocatoriaForm(request.POST)
-         if form.is_valid():
-             form.save()
-         return redirect('/convocatoria/')
+        if id == 0:
+            form = ConvocatoriaForm(request.POST)
+        else:
+            convocatoria = Convocatoria.objects.get(pk = id)
+            form = ConvocatoriaForm(request.POST, instance = convocatoria)
+        if form.is_valid():
+            form.save()
+        return redirect('/convocatoria/')
 
 #epoca
 def epoca_list(request):
@@ -127,7 +141,7 @@ def epoca_list(request):
                                                       'ano, nome_campeonato, count(ano)  '
                                                       ' FROM epoca inner join campeonato '
                                                        'on epoca.n_campeonato = campeonato.n_campeonato '
-                                                       'group by epoca.n_campeonato, nome_campeonato, ano '
+                                                       'group by epoca.n_campeonato, nome_campeonato, ano   '
                                                        'order by epoca.ano asc')}
 	return render( request, "epoca/epoca_list.html", context)
 
@@ -137,14 +151,18 @@ def epoca_novo(request, id = 0):
         if id == 0:
             form = EpocaForm()
         else:
-            epoca = EpocaForm.objects.get(pk = id)
+            epoca = Epoca.objects.get(pk = id)
             form = EpocaForm(instance = epoca)
         return render(request, "epoca/epoca_novo.html", {'form': form})
      else:
-         form = EpocaForm(request.POST)
-         if form.is_valid():
-             form.save()
-         return redirect('/epoca/')
+        if id == 0:
+            form = EpocaForm(request.POST)
+        else:
+            epoca = Epoca.objects.get(pk = id)
+            form = EpocaForm(request.POST, instance = epoca)
+        if form.is_valid():
+            form.save()
+        return redirect('/epoca/')
 
 #equipa
 def equipa_list(request):
@@ -157,23 +175,30 @@ def equipa_novo(request, id = 0):
         if id == 0:
             form = EquipaForm()
         else:
-            equipa = EquipaForm.objects.get(pk = id)
+            equipa = Equipa.objects.get(pk = id)
             form = EquipaForm(instance = equipa)
         return render(request, "equipa/equipa_novo.html", {'form': form})
     else:
-         form = EquipaForm(request.POST)
-         if form.is_valid():
-             form.save()
-         return redirect('/equipa/')
+        if id == 0:
+            form = EquipaForm(request.POST)
+        else:
+            equipa = Equipa.objects.get(pk = id)
+            form = EquipaForm(request.POST, instance = equipa)
+        if form.is_valid():
+            form.save()
+        return redirect('/equipa/')
+
+def equipa_more(request, n_equipa):
+	try:
+		equipa = Equipa.objects.get(pk = n_equipa)
+	except Equipa.DoesNotExist:
+		raise Http404('Equipa não existe')
+	return render(request, 'equipa/equipa_more.html', context={'equipa':equipa})
+
 
 #faixa_etaria
 def faixa_etaria_list(request):
-	context = {'faixa_etaria_list':FaixaEtaria.objects.raw('SELECT n_faixa,  '
-                                                      'designacao, count(*)  '
-                                                      ' FROM faixa_etaria inner join equipa '
-                                                       'on faixa_etaria.n_faixa = equipa.faixa_etaria '
-                                                       'group by faixa_etaria.n_faixa, designacao '
-                                                       )}
+	context = {'faixa_etaria_list':FaixaEtaria.objects.all()}
 	return render( request, "faixa_etaria/faixa_etaria_list.html", context)
 
 def faixa_etaria_novo(request, id = 0):
@@ -181,23 +206,30 @@ def faixa_etaria_novo(request, id = 0):
         if id == 0:
             form = FaixaEtariaForm()
         else:
-            faixa_etaria = FaixaEtariaForm.objects.get(pk = id)
+            faixa_etaria = FaixaEtaria.objects.get(pk = id)
             form = FaixaEtariaForm(instance = faixa_etaria)
         return render(request, "faixa_etaria/faixa_etaria_novo.html", {'form': form})
      else:
-         form = FaixaEtariaForm(request.POST)
-         if form.is_valid():
-             form.save()
-         return redirect('/faixa_etaria/')
+        if id == 0:
+            form = FaixaEtariaForm(request.POST)
+        else:
+            faixa_etaria = FaixaEtaria.objects.get(pk = id)
+            form = FaixaEtariaForm(request.POST, instance = faixa_etaria)
+        if form.is_valid():
+            form.save()
+        return redirect('/faixa_etaria/')
+
+def faixa_etaria_more(request, n_faixa):
+	try:
+		faixa_etaria = FaixaEtaria.objects.get(pk = n_faixa)
+	except FaixaEtaria.DoesNotExist:
+		raise Http404('Faixa Etária não existe')
+	return render(request, 'faixa_etaria/faixa_etaria_more.html', context={'faixa_etaria':faixa_etaria})
+
 
 #jogador
 def jogador_list(request):
-    context = {'jogador_list':Jogador.objects.raw('SELECT Jogador.n_jogador, nome, nome_equipa, nome_modalidade FROM Jogador INNER JOIN Convocatoria '
-    'ON Jogador.n_jogador = Convocatoria.n_jogador INNER JOIN Equipa '
-    'ON Convocatoria.n_equipa = Equipa.n_equipa INNER JOIN Modalidade '
-    'ON Equipa.modalidade = Modalidade.n_modalidade '
-    'GROUP BY Jogador.n_jogador, nome, nome_equipa, nome_modalidade, Equipa.n_equipa '
-    'ORDER BY Equipa.n_equipa')}
+    context = {'jogador_list':Jogador.objects.all()}
 
     return render( request, "jogador/jogador_list.html", context)
 
@@ -206,26 +238,30 @@ def jogador_novo(request, id = 0):
 		if id == 0:
 			form = JogadorForm()
 		else:
-			jogador = JogadorForm.objects.get(pk = id)
+			jogador = Jogador.objects.get(pk = id)
 			form = JogadorForm(instance = jogador)
 		return render(request, "jogador/jogador_novo.html", {'form': form})
 	else:
-	    form = JogadorForm(request.POST)
-	    if form.is_valid():
-	        form.save()
-	    return redirect('/jogador/')
+		if id == 0:
+			form = JogadorForm(request.POST)
+		else:
+			jogador = Jogador.objects.get(pk = id)
+			form = JogadorForm(request.POST, instance = jogador)
+		if form.is_valid():
+			form.save()
+		return redirect('/jogador/')
+
+def jogador_more(request, n_jogador):
+	try:
+		jogador = Jogador.objects.get(pk = n_jogador)
+	except Jogador.DoesNotExist:
+		raise Http404('Jogador não existe')
+	return render(request, 'jogador/jogador_more.html', context={'jogador':jogador})
+
 
 #jogo
 def jogo_list(request):
-    context = {'jogo_list':Jogo.objects.raw('SELECT jogo.n_jogo, '
-                                               'CASE WHEN equipa_a <> 0 '
-                                               ' THEN (Select nome_equipa from equipa where n_equipa = equipa_a) '
-                                               'END equipa_a, '
-                                               'CASE WHEN equipa_b <> 0 '
-                                                ' THEN (Select nome_equipa from equipa where n_equipa = equipa_b) '
-                                                'END equipa_b, dia, hora, localizacao '
-                                            'FROM jogo inner join resultado_jogo  '
-                                            'on jogo.n_jogo = resultado_jogo.n_jogo')}
+    context = {'jogo_list':Jogo.objects.all()}
     return render( request, "jogo/jogo_list.html", context)
 
 
@@ -234,15 +270,25 @@ def jogo_novo(request, id = 0):
         if id == 0:
             form = JogoForm()
         else:
-            jogo = JogoForm.objects.get(pk = id)
+            jogo = Jogo.objects.get(pk = id)
             form = JogoForm(instance = jogo)
         return render(request, "jogo/jogo_novo.html", {'form': form})
     else:
-         form = JogoForm(request.POST)
-         if form.is_valid():
-             form.save()
-         return redirect('/jogo/')
+        if id == 0:
+            form = JogoForm(request.POST)
+        else:
+            jogo = Jogo.objects.get(pk = id)
+            form = JogoForm(request.POST, instance = jogo)
+        if form.is_valid():
+        	form.save()
+        return redirect('/jogo/')
 
+def jogo_more(request, n_jogo):
+	try:
+		jogo = Jogo.objects.get(pk = n_jogo)
+	except Jogo.DoesNotExist:
+		raise Http404('Jogo não existe')
+	return render(request, 'jogo/jogo_more.html', context={'jogo':jogo})
 
 
 #marcacao
@@ -265,23 +311,22 @@ def marcacao_novo(request, id = 0):
         if id == 0:
             form = MarcacaoForm()
         else:
-            marcacao = MarcacaoForm.objects.get(pk = id)
+            marcacao = Marcacao.objects.get(pk = id)
             form = MarcacaoForm(instance = marcacao)
         return render(request, "marcacao/marcacao_novo.html", {'form': form})
     else:
-         form = MarcacaoForm(request.POST)
-         if form.is_valid():
-             form.save()
-         return redirect('/marcacao/')
+        if id == 0:
+            form = MarcacaoForm(request.POST)
+        else:
+            marcacao = Marcacao.objects.get(pk = id)
+            form = MarcacaoForm(request.POST, instance = marcacao)
+        if form.is_valid():
+            form.save()
+        return redirect('/marcacao/')
 
 #modalidade
 def modalidade_list(request):
-	context = {'modalidade_list':Modalidade.objects.raw('SELECT n_modalidade,  '
-                                                      'nome_modalidade, count(*)  '
-                                                      ' FROM modalidade inner join equipa '
-                                                       'on modalidade.n_modalidade = equipa.modalidade '
-                                                       'group by n_modalidade, nome_modalidade '
-                                                       )}
+	context = {'modalidade_list':Modalidade.objects.all()}
 	return render( request, "modalidade/modalidade_list.html", context)
 
 def modalidade_novo(request, id = 0):
@@ -289,14 +334,26 @@ def modalidade_novo(request, id = 0):
         if id == 0:
             form = ModalidadeForm()
         else:
-            modalidade = ModalidadeForm.objects.get(pk = id)
+            modalidade = Modalidade.objects.get(pk = id)
             form = ModalidadeForm(instance = modalidade)
         return render(request, "modalidade/modalidade_novo.html", {'form': form})
      else:
-         form = ModalidadeForm(request.POST)
-         if form.is_valid():
-             form.save()
-         return redirect('/modalidade/')
+        if id == 0:
+            form = ModalidadeForm(request.POST)
+        else:
+            modalidade = Modalidade.objects.get(pk=id)
+            form = ModalidadeForm(request.POST, instance = modalidade)
+        if form.is_valid():
+            form.save()
+        return redirect('/modalidade/')
+
+def modalidade_more(request, n_modalidade):
+	try:
+		modalidade = Modalidade.objects.get(pk = n_modalidade)
+	except Modalidade.DoesNotExist:
+		raise Http404('Modalidade não existe')
+	return render(request, 'modalidade/modalidade_more.html', context={'modalidade':modalidade})
+
 
 #pontuacao
 def pontuacao_list(request):
@@ -309,25 +366,22 @@ def pontuacao_novo(request, id = 0):
         if id == 0:
             form = PontuacaoForm()
         else:
-            pontuacao = PontuacaoForm.objects.get(pk = id)
+            pontuacao = Pontuacao.objects.get(pk = id)
             form = PontuacaoForm(instance = pontuacao)
         return render(request, "pontuacao/pontuacao_novo.html", {'form': form})
     else:
-         form = Pontuacao(request.POST)
-         if form.is_valid():
-             form.save()
-         return redirect('/pontuacao/')
+        if id == 0:
+            form = Pontuacao(request.POST)
+        else:
+            pontuacao = Pontuacao.objects.get(pk = id)
+            form = PontuacaoForm(request.POST, instance = pontuacao)
+        if form.is_valid():
+            form.save()
+        return redirect('/pontuacao/')
 
 #resultado
 def resultado_list(request):
-    context = {'resultado_list':ResultadoJogo.objects.raw('SELECT n_jogo, '
-                                                            ' CASE  WHEN equipa_a <> 0 '
-                                                                     ' THEN (Select nome_equipa from equipa where n_equipa = equipa_a) '
-                                                             'END equipa_1, '
-                                                         '  CASE	WHEN equipa_b <> 0 '
-                                                                    'THEN (Select nome_equipa from equipa where n_equipa = equipa_b) '
-                                                                    'END equipa_2, pontuacao_a, pontuacao_b '
-                                                      'FROM resultado_jogo ')}
+    context = {'resultado_list':ResultadoJogo.objects.all()}
     return render( request, "resultado/resultado_list.html", context)
 
 
@@ -336,28 +390,23 @@ def resultado_novo(request, id = 0):
         if id == 0:
             form = ResultadoForm()
         else:
-            resultado = ResultadoForm.objects.get(pk = id)
+            resultado = ResultadoJogo.objects.get(pk = id)
             form = ResultadoForm(instance = resultado)
         return render(request, "resultado/resultado_novo.html", {'form': form})
     else:
-         form = ResultadoForm(request.POST)
-         if form.is_valid():
-             form.save()
-         return redirect('/resultado/')
+        if id == 0:
+            form = ResultadoForm(request.POST)
+        else:
+            resultado = ResultadoJogo.objects.get(pk = id)
+            form = ResultadoForm(request.POST, instance = resultado)
+        if form.is_valid():
+            form.save()
+        return redirect('/resultado/')
 
 
 #substituicao
 def substituicao_list(request):
-    context = {'substituicao_list':Substituicao.objects.raw('SELECT n_substituicao, jogo, '
-                                                            ' CASE  WHEN equipa_a <> 0 '
-                                                                     ' THEN (Select nome_equipa from equipa where n_equipa = equipa_a) '
-                                                             'END equipa_1, '
-                                                            '  CASE	WHEN equipa_b <> 0 '
-                                                                    'THEN (Select nome_equipa from equipa where n_equipa = equipa_b) '
-                                                                    'END equipa_2, pontuacao_a, pontuacao_b '
-                                                                'FROM substituicao INNER JOIN Resultado_jogo '
-                                                                'on substituicao.jogo = resultado_jogo.n_jogo inner join jogador '
-                                                                ' on substituicao.jogador_entra = jogador.n_jogador')}
+    context = {'substituicao_list':Substituicao.objects.all()}
     return render( request, "substituicao/substituicao_list.html", context)
 
 
@@ -366,20 +415,30 @@ def substituicao_novo(request, id = 0):
         if id == 0:
             form = SubstituicaoForm()
         else:
-            substituicao = SubstituicaoForm.objects.get(pk = id)
+            substituicao = Substituicao.objects.get(pk = id)
             form = SubstituicaoForm(instance = substituicao)
         return render(request, "substituicao/substituicao_novo.html", {'form': form})
     else:
-         form = SubstituicaoForm(request.POST)
-         if form.is_valid():
-             form.save()
-         return redirect('/substituicao/')
+        if id == 0:
+            form = SubstituicaoForm(request.POST)
+        else:
+            substituicao = Substituicao.objects.get(pk = id)
+            form = SubstituicaoForm(request.POST, instance = substituicao)
+        if form.is_valid():
+            form.save()
+        return redirect('/substituicao/')
+
+def substituicao_more(request, n_substituicao):
+	try:
+		substituicao = Substituicao.objects.get(pk = n_substituicao)
+	except Substituicao.DoesNotExist:
+		raise Http404('Substituicao não existe')
+	return render(request, 'substituicao/substituicao_more.html', context={'substituicao':substituicao})
+
 
 #tipo_acao
 def tipo_acao_list(request):
-    context = {'tipo_acao_list':TipoAcao.objects.raw('SELECT n_tipo_acao, descricao, nome_modalidade '
-                                                    'FROM tipo_acao INNER JOIN modalidade '
-                                                    'on tipo_acao.modalidade = modalidade.n_modalidade ')}
+    context = {'tipo_acao_list':TipoAcao.objects.all()}
     return render( request, "tipo_acao/tipo_acao_list.html", context)
 
 
@@ -388,21 +447,30 @@ def tipo_acao_novo(request, id = 0):
         if id == 0:
             form = TipoAcaoForm()
         else:
-            tipo_acao = TipoAcaoForm.objects.get(pk = id)
+            tipo_acao = TipoAcao.objects.get(pk = id)
             form = TipoAcaoForm(instance = tipo_acao)
         return render(request, "tipo_acao/tipo_acao_novo.html", {'form': form})
      else:
-         form = TipoAcaoForm(request.POST)
-         if form.is_valid():
-             form.save()
-         return redirect('/tipo_acao/')
+        if id == 0:
+            form = TipoAcaoForm(request.POST)
+        else:
+            tipo_acao = TipoAcao.objects.get(pk = id)
+            form = TipoAcaoForm(request.POST, instance = tipo_acao)
+        if form.is_valid():
+            form.save()
+        return redirect('/tipo_acao/')
+
+def tipo_acao_more(request, n_tipo):
+	try:
+		tipo_acao = TipoAcao.objects.get(pk = n_tipo)
+	except TipoAcao.DoesNotExist:
+		raise Http404('Tipo de Ação não existe')
+	return render(request, 'tipo_acao/tipo_acao_more.html', context={'tipo_acao':tipo_acao})
+
 
  #tipo_pontucao
 def tipo_pontuacao_list(request):
-    context = {'tipo_pontuacao_list':TipoPontuacao.objects.raw('SELECT n_tipo_pontuacao, vitoria, derrota, empate, nome_modalidade '
-                                                                'FROM tipo_pontuacao INNER JOIN modalidade '
-                                                                'on tipo_pontuacao.n_tipo_pontuacao = modalidade.tipo_pontuacao '
-                                                                )}
+    context = {'tipo_pontuacao_list':TipoPontuacao.objects.all()}
     return render( request, "tipo_pontuacao/tipo_pontuacao_list.html", context)
 
 
@@ -411,12 +479,22 @@ def tipo_pontuacao_novo(request, id = 0):
         if id == 0:
             form = AcaoForm()
         else:
-            tipo_pontuacao = TipoPontuacaoForm.objects.get(pk = id)
+            tipo_pontuacao = TipoPontuacao.objects.get(pk = id)
             form = TipoPontuacaoForm(instance = tipo_pontuacao)
-        return render(request, "tipo_pontuacao/tipo_pontucao_novo.html", {'form': form})
+        return render(request, "tipo_pontuacao/tipo_pontuacao_novo.html", {'form': form})
     else:
-      form = AcaoForm(request.POST)
-      if form.is_valid():
-          form.save()
-      return redirect('/tipo_pontuacao/')
+        if id == 0:
+            form = TipoPontuacaoForm(request.POST)
+        else:
+            tipo_pontuacao = TipoPontuacao.objects.get(pk = id)
+            form = TipoPontuacaoForm(request.POST, instance = tipo_pontuacao)
+        if form.is_valid():
+            form.save()
+        return redirect('/tipo_pontuacao/')
 
+def tipo_pontuacao_more(request, n_tipo):
+	try:
+		tipo_pontuacao = TipoPontuacao.objects.get(pk = n_tipo)
+	except TipoPontuacao.DoesNotExist:
+		raise Http404('Tipo de Pontuação não existe')
+	return render(request, 'tipo_pontuacao/tipo_pontuacao_more.html', context={'tipo_pontuacao':tipo_pontuacao})
