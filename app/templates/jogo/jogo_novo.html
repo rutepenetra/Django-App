@@ -1,0 +1,45 @@
+{% extends "main/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container">
+    <div class="col-md-10 offset-md-1 mt-5">
+        <div class="jumbotron">
+            <h1 class="display-4"> Jogo </h1>
+            <hr class="my-4">
+            <form action="" method="post" autocomplete="off">
+                {% csrf_token %}
+
+                <div class="row">
+                    <div class="col-md-4">
+                        {{form.dia|as_crispy_field}}
+                    </div>
+                    <div class="col-md-8">
+                        {{form.hora|as_crispy_field}}
+                    </div>
+                </div>
+
+                {{form.localizacao|as_crispy_field}}
+                <div class="row">
+                    <br>
+                </div>
+                <div class="row button-row">
+                    <div class="col-md-10">
+                        <button type="submit" class="btn btn-success btn-block btn-lg"><i class="fas fa-database"></i>
+                            Submit
+                        </button>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="http://127.0.0.1:8000/jogo" class="btn btn-secondary btn-block btn-lg">
+                            <i class="fas fa-stream"></i> Back to list
+                        </a>
+                    </div>
+                </div>
+
+            </form>
+    </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

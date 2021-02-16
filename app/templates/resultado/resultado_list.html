@@ -1,0 +1,41 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="col-md-10 offset-md-1 mt-5">
+        <div class="jumbotron">
+            <h1 class="display-4">Resultado dos Jogos</h1>
+            <p class="lead font-italic">Lista de todos os resultados dos jogos</p>
+            <hr class="my-4">
+            <table class="table table-bordeless">
+                <thead class="border-bottom font-weight-bold">
+                <tr>
+                    <td><h4>Jogo</h4> </td>
+                    <td><h4>Resultado</h4> </td>
+                    <td></td>
+                    <td>
+                        <a href="{% url 'resultado_novo' %}" class="btn btn-outline-dark">
+                            <i class="fas fa-plus"></i> NOVO
+                        </a>
+                    </td>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for resultado in resultado_list %}
+                <tr>
+                    <td>{{resultado.equipa_a}} : {{resultado.equipa_b}}</td>
+                    <td>{{resultado.pontuacao_a}} : {{resultado.pontuacao_b}}</td>
+                    <td></td>
+                    <td>
+                   
+                    </td>
+      
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}

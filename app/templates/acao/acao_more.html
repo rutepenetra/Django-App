@@ -1,0 +1,45 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<div class="container">
+	<div class="col-md-10 offset-md-1 mt-5">
+		<div class="jumbotron">
+			<h1 class="display-4">Ações Disciplinares</h1>
+			<hr class="my-4">
+			
+			<div class="row">
+				<h3>
+					Jogo:
+				</h3>
+				<p class="lead font-italic"> &emsp; {{acao.jogo}}</p>
+				<h3>
+					Jogador:
+				</h3>
+				<p class="lead font-italic"> &emsp; {{acao.jogador}}</p>
+				<h3>
+					Tipo de Ação:
+				</h3>
+				<p class="lead font-italic"> &emsp; {{acao.tipo}}</p>
+				<h3>
+					Descrição:
+				</h3>
+				<p class="lead font-italic"> &emsp; {{acao.descricao}}</p>
+			</div>
+			<div class="row">
+				<br>
+			</div>
+			<div class="row button-row">
+				<div class="col-md-10">
+				
+				</div>
+				<div class="col-md-2">
+					<a href="http://127.0.0.1:8000/acao" class="btn btn-secondary btn-block btn-lg">
+						<i class="fas fa-stream"></i> Back to list
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock content %}

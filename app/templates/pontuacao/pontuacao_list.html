@@ -1,0 +1,46 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="col-md-10 offset-md-1 mt-5">
+        <div class="jumbotron">
+            <h1 class="display-4">Pontuações</h1>
+            <p class="lead font-italic">Lista de todas as pontuações</p>
+    
+            <hr class="my-4">
+            <table class="table table-bordeless">
+                <thead class="border-bottom font-weight-bold">
+                <tr>
+                    <td> <h4>Equipa</h4></td>
+                    <td> <h4>Campeonato</h4></td>
+                    <td> <h4>Pontuação</h4></td>
+                    <td></td>
+                    <td>
+                        <a href="{% url 'pontuacao_novo' %}" class="btn btn-outline-dark">
+                            <i class="fas fa-plus"></i> NOVO
+                        </a>
+                    </td>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for pontuacao in pontuacao_list %}
+                <tr>
+                    <td>{{pontuacao.n_equipa.nome_equipa}}</td>
+                    <td>{{pontuacao.n_campeonato.nome_campeonato}}</td>
+                    <td>{{pontuacao.pontuacao_total}}</td>
+                    <td>
+                        
+                    
+                    </td>
+                    <td>
+                    
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}

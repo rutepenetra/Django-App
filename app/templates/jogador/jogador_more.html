@@ -1,0 +1,51 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<div class="container">
+	<div class="col-md-10 offset-md-1 mt-5">
+		<div class="jumbotron">
+			<h1 class="display-4">Jogador</h1>
+			<hr class="my-4">
+			
+			<div>
+				<h3>
+					Nome:
+				</h3>
+				<p class="lead font-italic">&emsp;{{jogador.nome}}</p>
+				<h3>
+					Data Nascimento:
+				</h3>
+				<p class="lead font-italic">&emsp;{{jogador.data_nasc}}</p>
+				<h3>
+					NIF:
+				</h3>
+				<p class="lead font-italic">&emsp;{{jogador.nif}}</p>
+				<h3>
+					Telefone:
+				</h3>
+				<p class="lead font-italic">&emsp;{{jogador.telefone}}</p>
+				<h3>
+					Email:
+				</h3>
+				<p class="lead font-italic">&emsp;{{jogador.email}}</p>
+				<h3>
+					Morada:
+				</h3>
+				<p class="lead font-italic">&emsp;{{jogador.morada}}</p>
+				
+			</div>
+			<div class="row button-row">
+				<div class="col-md-10">
+				
+				</div>
+				<div class="col-md-2">
+					<a href="http://127.0.0.1:8000/jogador" class="btn btn-secondary btn-block btn-lg">
+						<i class="fas fa-stream"></i> Back to list
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock content %}

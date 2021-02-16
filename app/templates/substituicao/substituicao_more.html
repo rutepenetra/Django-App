@@ -1,0 +1,39 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<div class="container">
+	<div class="col-md-10 offset-md-1 mt-5">
+		<div class="jumbotron">
+			<h1 class="display-4">Substituições</h1>
+			<hr class="my-4">
+			
+			<div>
+				<h3>
+					Jogo:
+				</h3>
+				<p class="lead font-italic">&emsp;{{substituicao.jogo}}</p>
+				<h3>
+					Jogador Que Entrou:
+				</h3>
+				<p class="lead font-italic">&emsp;{{substituicao.jogador_entra}}</p>
+				<h3>
+					Jogador Que Saiu:
+				</h3>
+				<p class="lead font-italic">&emsp;{{substituicao.jogador_sai}}</p>
+				
+			</div>
+			<div class="row button-row">
+				<div class="col-md-10">
+				
+				</div>
+				<div class="col-md-2">
+					<a href="http://127.0.0.1:8000/substituicao" class="btn btn-secondary btn-block btn-lg">
+						<i class="fas fa-stream"></i> Back to list
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock content %}

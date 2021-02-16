@@ -1,0 +1,42 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<div class="container">
+	<div class="col-md-10 offset-md-1 mt-5">
+		<div class="jumbotron">
+			<h1 class="display-4"> Tipos de Pontuação </h1>
+			<hr class="my-4">
+			
+			<div>
+				<h3>
+					Descrição:
+				</h3>
+				<p class="lead font-italic">&emsp;{{tipo_pontuacao.descricao_tipo_pontuacao}}</p>
+				<h3>
+					Pontos em Caso de Vitória:
+				</h3>
+				<p class="lead font-italic">&emsp;{{tipo_pontuacao.vitoria}}</p>
+				<h3>
+					Pontos em Caso de Derrota:
+				</h3>
+				<p class="lead font-italic">&emsp;{{tipo_pontuacao.derrota}}</p>
+				<h3>
+					Pontos em Caso de Empate:
+				</h3>
+				<p class="lead font-italic">&emsp;{{tipo_pontuacao.empate}}</p>
+			</div>
+			<div class="row button-row">
+				<div class="col-md-10">
+				
+				</div>
+				<div class="col-md-2">
+					<a href="http://127.0.0.1:8000/tipo_pontuacao" class="btn btn-secondary btn-block btn-lg">
+						<i class="fas fa-stream"></i> Back to list
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock content %}

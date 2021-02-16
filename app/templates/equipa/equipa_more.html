@@ -1,0 +1,64 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<div class="container">
+	<div class="col-md-10 offset-md-1 mt-5">
+		<div class="jumbotron">
+			<h1 class="display-4">Equipa</h1>
+			<hr class="my-4">
+			
+			<div>
+				<h3>
+					Nome:
+				</h3>
+				<p class="lead font-italic">&emsp;{{equipa.nome_equipa}}</p>
+				<h3>
+					Ano de Fundação:
+				</h3>
+				<p class="lead font-italic">&emsp;{{equipa.fundacao}}</p>
+				<h3>
+					Origem:
+				</h3>
+				<p class="lead font-italic">&emsp;{{equipa.origem}}</p>
+				<h3>
+					Telefone:
+				</h3>
+				<p class="lead font-italic">&emsp;{{equipa.telefone}}</p>
+				<h3>
+					Email:
+				</h3>
+				<p class="lead font-italic">&emsp;{{equipa.email}}</p>
+				<h3>
+					Descrição:
+				</h3>
+				<p class="lead font-italic">&emsp;{{equipa.descricao_equipa}}</p>
+				<h3>
+					Treinador:
+				</h3>
+				<p class="lead font-italic">&emsp;{{equipa.treinador}}</p>
+				<h3>
+					Modalidade:
+				</h3>
+				<p class="lead font-italic">&emsp;{{equipa.modalidade}}</p>
+				<h3>
+					Faixa Etária:
+				</h3>
+				<p class="lead font-italic">&emsp;{{equipa.faixa_etaria}}</p>
+				
+			</div>
+			<div class="row button-row">
+				<div class="col-md-10">
+				
+				</div>
+				<div class="col-md-2">
+					<a href="http://127.0.0.1:8000/equipa" class="btn btn-secondary btn-block btn-lg">
+						<i class="fas fa-stream"></i> Back to list
+					</a>
+				</div>
+			</div>
+		
+		</div>
+	</div>
+</div>
+
+{% endblock content %}

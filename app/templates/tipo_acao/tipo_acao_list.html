@@ -1,0 +1,48 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="col-md-10 offset-md-1 mt-5">
+        <div class="jumbotron">
+            <h1 class="display-4"> Tipo de Ações Disciplinares </h1>
+            <p class="lead font-italic"> Lista de todos os tipos de ações disciplinares </p>
+            <hr class="my-4">
+            <table class="table table-bordeless">
+                <thead class="border-bottom font-weight-bold">
+                <tr>
+                    <td><h4> Tipo Ação </h4></td>
+                    <td><h4> Modalidade </h4></td>
+                    <td></td>
+                    <td>
+                        <a href="{% url 'tipo_acao_novo' %}" class="btn btn-outline-dark">
+                            <i class="fas fa-plus"></i> NOVO
+                        </a>
+                    </td>
+                
+                </tr>
+                </thead>
+                <tbody>
+                {% for tipo_acao in tipo_acao_list %}
+                <tr>
+                    <td>{{tipo_acao.descricao}}</td>
+                    <td>{{tipo_acao.modalidade}}</td>
+                    <td>
+                        <a href="{% url 'tipo_acao_update' tipo_acao.n_tipo_acao %}" class="btn text-secondary px-0">
+                            <i class="far fa-edit fa-lg"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{% url 'tipo_acao_more' tipo_acao.n_tipo_acao %}" class="btn btn-outline-primary">
+                            <i class="fas fa-plus"></i> INFO
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,50 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="col-md-10 offset-md-1 mt-5">
+        <div class="jumbotron">
+            <h1 class="display-4">Jogadores</h1>
+            <p class="lead font-italic">Lista de todos os jogadores</p>
+            <hr class="my-4">
+            <table class="table table-bordeless">
+                <thead class="border-bottom font-weight-bold" >
+                <tr>
+                    <td> Nome </td>
+                    <td> Data Nascimento </td>
+                    <td> Morada </td>
+                    <td></td>
+                    <td>
+                        <a href="{% url 'jogador_novo' %}" class="btn btn-outline-dark btn-sm">
+                            <i class="fas fa-plus"></i> NOVO
+                        </a>
+                    </td>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for jogador in jogador_list %}
+                <tr>
+                    <td>{{jogador.nome}}</td>
+                    <td>{{jogador.data_nasc}}</td>
+                    <td>{{jogador.telefone}}</td>
+                    <td>
+                        <a href="{% url 'jogador_update' jogador.n_jogador %}" class="btn text-secondary px-0">
+                            <i class="far fa-edit fa-lg"></i>
+                        </a>
+     
+                    </td>
+                    <td>
+                        <a href="{% url 'jogador_more' jogador.n_jogador %}" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-plus"></i> INFO
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
